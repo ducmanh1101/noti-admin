@@ -1,10 +1,10 @@
+import { Button, Space, Typography } from "antd";
+import Card from "antd/es/card/Card";
 import { DeleteOutlined } from "@ant-design/icons";
 import {
   useNotifications,
   useRemoveNotification,
 } from "@novu/notification-center";
-import { Button, Space, Typography } from "antd";
-import Card from "antd/es/card/Card";
 
 export const UseNotifications = () => {
   const { notifications, isFetching, isLoading } = useNotifications();

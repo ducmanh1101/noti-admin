@@ -9,8 +9,8 @@ import { Button, Card, Col, Empty, Row, Space, Table, Typography } from "antd";
 import Column from "antd/es/table/Column";
 
 import { UseNotifications } from "./customLayoutInApp";
-import { APPLICATION_ID } from "../../constants";
 import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
+import { appId, urlServer } from "../../configs";
 
 export interface subsType {
   channels: [
@@ -45,11 +45,12 @@ export interface subsType {
 const ShowAllSubscribers = () => {
   const [dataSubs, setDataSubs] = useState<subsType[]>([]);
   const [dataSub, setDataSub] = useState<subsType[]>([]);
+  const applicationId: any = appId;
 
   const handleShow = async (subscriberId: string) => {
     try {
       const response = await axios.get<subsType[]>(
-        `http://localhost:3001/subscribers/${subscriberId}`
+        `${urlServer}/subscribers/${subscriberId}`
       );
       const data = response.data;
       setDataSub(data);
@@ -60,7 +61,7 @@ const ShowAllSubscribers = () => {
 
   const handleDelete = async (subscriberId: string) => {
     try {
-      await axios.delete(`http://localhost:3001/subscribers/${subscriberId}`, {
+      await axios.delete(`${urlServer}/subscribers/${subscriberId}`, {
         data: {
           subscriberId,
         },
@@ -70,7 +71,7 @@ const ShowAllSubscribers = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/subscribers`);
+      const response = await axios.get(`${urlServer}/subscribers`);
       setDataSubs(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -134,8 +135,7 @@ const ShowAllSubscribers = () => {
               <Space.Compact key={data._id} direction="vertical">
                 <NovuProvider
                   subscriberId={data.subscriberId}
-                  applicationIdentifier={APPLICATION_ID}
-                  //   styles={styles}
+                  applicationIdentifier={applicationId}
                   initialFetchingStrategy={{
                     fetchNotifications: true,
                     fetchUserPreferences: true,
@@ -156,7 +156,7 @@ const ShowAllSubscribers = () => {
                 <Typography.Text>Phone: {data.phone}</Typography.Text>
                 <NovuProvider
                   subscriberId={data.subscriberId}
-                  applicationIdentifier={APPLICATION_ID}
+                  applicationIdentifier={applicationId}
                   initialFetchingStrategy={{
                     fetchNotifications: true,
                     fetchOrganization: true,

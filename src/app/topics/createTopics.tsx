@@ -1,6 +1,7 @@
 import { Button, Col, Form, Input, Modal, Row, Typography } from "antd";
 import axios from "axios";
 import { useState } from "react";
+import { urlServer } from "../../configs";
 
 export interface TopicType {
   key: string;
@@ -15,7 +16,7 @@ export const CreateTopics = () => {
 
   const handleCreateTopic = async () => {
     try {
-      await axios.post(`http://localhost:3001/topics`, {
+      await axios.post(`${urlServer}/topics`, {
         key: topicKey,
         name: topicName,
       });

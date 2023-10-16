@@ -11,9 +11,11 @@ import {
   Typography,
 } from "antd";
 import { useEffect, useState } from "react";
-import { TopicType } from "../topics/createTopics";
 import axios from "axios";
 import TextArea from "antd/es/input/TextArea";
+
+import { TopicType } from "../topics/createTopics";
+import { urlServer } from "../../configs";
 
 export const Trigger = () => {
   const [title, setTitle] = useState("");
@@ -25,7 +27,7 @@ export const Trigger = () => {
 
   const fetchDataTopic = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/topics`);
+      const response = await axios.get(`${urlServer}/topics`);
       const topics: TopicType[] = response.data;
 
       const listTopics: SelectProps["options"] = [];
@@ -43,7 +45,7 @@ export const Trigger = () => {
 
   const handleSendToSubscriber = async () => {
     try {
-      await axios.post("http://localhost:3001/event", {
+      await axios.post(`${urlServer}/event`, {
         subscriberId: subscriberId,
         title: title,
         description: description,
@@ -54,7 +56,7 @@ export const Trigger = () => {
   };
 
   const handleSendToTopic = async () => {
-    await axios.post(`http://localhost:3001/event/topics/${topicKey}`, {
+    await axios.post(`${urlServer}/event/topics/${topicKey}`, {
       key: topicKey,
       title: title,
       description: description,

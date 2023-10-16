@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -10,13 +11,14 @@ import {
   Tag,
   Typography,
 } from "antd";
-import { CreateTopics } from "../topics/createTopics";
 import Column from "antd/es/table/Column";
-import { TopicType } from "../topics/createTopics";
-import { useEffect, useState } from "react";
-import { API_KEY } from "../../constants";
-import axios from "axios";
 import { DeleteOutlined, MinusCircleOutlined } from "@ant-design/icons";
+import axios from "axios";
+
+import { CreateTopics } from "../topics/createTopics";
+import { TopicType } from "../topics/createTopics";
+import { API_KEY } from "../../constants";
+import { urlServer } from "../../configs";
 
 export const ManageTopics = () => {
   const [dataTopic, setDataTopic] = useState<TopicType[]>([]);
@@ -26,12 +28,9 @@ export const ManageTopics = () => {
   const handleRemoveSubscriber = async (topicKey: string) => {
     try {
       console.log(subscriber);
-      await axios.post(
-        `http://localhost:3001/topics/${topicKey}/subscribers/removal`,
-        {
-          subscriberId: subscriber,
-        }
-      );
+      await axios.post(`${urlServer}/topics/${topicKey}/subscribers/removal`, {
+        subscriberId: subscriber,
+      });
       setIsModalOpen(false);
     } catch (error) {
       console.log(error);
@@ -40,7 +39,7 @@ export const ManageTopics = () => {
 
   const handleDeleteTopic = async (topicKey: string) => {
     try {
-      await axios.delete(`http://localhost:3001/topics/${topicKey}`, {
+      await axios.delete(`${urlServer}/topics/${topicKey}`, {
         headers: {
           Authorization: API_KEY,
         },
@@ -53,7 +52,7 @@ export const ManageTopics = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/topics`);
+        const response = await axios.get(`${urlServer}/topics`);
         setDataTopic(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
