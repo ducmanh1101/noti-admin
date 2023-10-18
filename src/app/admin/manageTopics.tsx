@@ -17,7 +17,6 @@ import axios from "axios";
 
 import { CreateTopics } from "../topics/createTopics";
 import { TopicType } from "../topics/createTopics";
-import { API_KEY } from "../../constants";
 import { urlServer } from "../../configs";
 
 export const ManageTopics = () => {
@@ -39,11 +38,7 @@ export const ManageTopics = () => {
 
   const handleDeleteTopic = async (topicKey: string) => {
     try {
-      await axios.delete(`${urlServer}/topics/${topicKey}`, {
-        headers: {
-          Authorization: API_KEY,
-        },
-      });
+      await axios.delete(`${urlServer}/topics/${topicKey}`);
     } catch (error) {
       alert("Can't be deleted as it still has subscribers assigned");
     }
