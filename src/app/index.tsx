@@ -1,5 +1,4 @@
 import { Col, Row } from "antd";
-import React from "react";
 import { Admin } from "./admin";
 
 export const App = () => {
